@@ -348,3 +348,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+.vs/ReponseCache/xs/project-cache/ReponseCache-Debug.json

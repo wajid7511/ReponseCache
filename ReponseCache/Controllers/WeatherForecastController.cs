@@ -19,7 +19,8 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
+    [HttpGet]
+    [Route("GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
         Console.WriteLine("API is has been called.");
@@ -30,6 +31,18 @@ public class WeatherForecastController : ControllerBase
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         })
         .ToArray();
+    }
+    [HttpGet]
+    [Route("GetFirst")]
+    public WeatherForecast GetFirst()
+    { 
+        var newObject = new WeatherForecast()
+        {
+            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(1)),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        };
+        return newObject;
     }
 }
 
