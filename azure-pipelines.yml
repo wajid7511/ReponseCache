@@ -27,3 +27,7 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/ReponseCache/dockerfile'
         tags: |
           $(tag)
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
