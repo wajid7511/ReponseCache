@@ -26,8 +26,17 @@ stages:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/ReponseCache/dockerfile'
         tags: |
-          $(tag)
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact'
+          dev-latest
+          $(Build.BuildNumber)
+          $(Build.BuildId)
+    - task: Bash@3
+      displayName: Save Docker Image
       inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
+        targetType: 'inline'
+        script: |
+          docker save -o $(Build.ArtifactStagingDirectory)/image.tar image:$(Build.BuildNumber)
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/image.tar'
+        artifact: 'response-cache-artifact'
+        publishLocation: 'pipeline' 
